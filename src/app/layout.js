@@ -5,6 +5,8 @@ import Header from "@/src/components/Header";
 import Footer from "../components/Footer";
 import siteMetadata from "../utils/siteMetaData";
 import Script from "next/script";
+import { FacebookPixel } from "./facebook-pixel"
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -55,7 +57,16 @@ export const metadata = {
 
 
 export default function RootLayout({ children }) {
-  return (
+  // Initialize Facebook Pixel after the component mounts
+  if (typeof window !== "undefined") {
+    // Check if we're in the client-side
+    const { useEffect } = require("react"); // Import useEffect conditionally
+    useEffect(() => {
+      FacebookPixel();
+    }, []);
+  }
+
+    return (
     <html lang="en">
       <body
         className={cx(
